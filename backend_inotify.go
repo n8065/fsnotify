@@ -103,6 +103,17 @@ func (w *watches) removePath(path string) ([]uint32, error) {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
+	fmt.Println("BEFORE:")
+	fmt.Println("  ", w.path)
+	fmt.Println("  ", w.wd)
+	defer func() {
+		fmt.Println("AFTER:")
+		fmt.Println("  ", w.path)
+		fmt.Println("  ", w.wd)
+		fmt.Println()
+		fmt.Println()
+	}()
+
 	path, recurse := recursivePath(path)
 	wd, ok := w.path[path]
 	if !ok {

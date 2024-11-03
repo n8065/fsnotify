@@ -1,0 +1,26 @@
+# Watch and unwatch two symlinks that both resolve to the same destination.
+require symlink
+
+mkdir /dir
+touch /dir/file
+
+ln -s /dir /link1
+ln -s /dir /link2
+
+watch /link1
+watch /link2
+
+touch /link1/file
+touch /link2/file
+
+#touch /link2/file
+
+print "UNWATCH 1"
+unwatch /link1
+
+print "UNWATCH 2"
+unwatch /link2
+
+Output:
+	write    /link2/file
+	write    /link2/file
