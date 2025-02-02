@@ -557,14 +557,14 @@ func (w *inotify) readEvents() {
 					// kqueue refactor we can use in the future. For now I'm
 					// okay with this as it's not publicly available.
 					// Correctness first, performance second.
-					if ev.renamedFrom != "" {
+					if ev.RenamedFrom != "" {
 						w.watches.mu.Lock()
 						for k, ww := range w.watches.wd {
 							if k == watch.wd || ww.path == ev.Name {
 								continue
 							}
-							if strings.HasPrefix(ww.path, ev.renamedFrom) {
-								ww.path = strings.Replace(ww.path, ev.renamedFrom, ev.Name, 1)
+							if strings.HasPrefix(ww.path, ev.RenamedFrom) {
+								ww.path = strings.Replace(ww.path, ev.RenamedFrom, ev.Name, 1)
 								w.watches.wd[k] = ww
 							}
 						}
@@ -639,7 +639,7 @@ func (w *inotify) newEvent(name string, mask, cookie uint32) Event {
 				}
 			}
 			w.cookiesMu.Unlock()
-			e.renamedFrom = prev
+			e.RenamedFrom = prev
 		}
 	}
 	return e
